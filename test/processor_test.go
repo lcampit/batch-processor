@@ -37,7 +37,7 @@ func (s *ProcessorTestSuite) TestProcessorPanicsWithoutProcessingFunction() {
 }
 
 func (s *ProcessorTestSuite) TestProcessorWithScalarLogic() {
-	ctx, _ := context.WithTimeout(context.Background(), time.Duration(s.TickerDurationSeconds+2)*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(s.TickerDurationSeconds+2)*time.Second)
 
 	inputChannel := make(chan int, s.BatchSize)
 	outputChannel := make(chan int)
@@ -78,6 +78,7 @@ func (s *ProcessorTestSuite) TestProcessorWithScalarLogic() {
 	}
 	// wait for the context to expire
 	wg.Wait()
+	cancel()
 
 	s.Assert().Equal(result, expectedSum)
 }
