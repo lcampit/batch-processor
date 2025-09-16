@@ -1,2 +1,6 @@
 [tools]
 "go:gotest.tools/gotestsum" = "latest"
+
+[tasks.test]
+description = "run tests"
+run = "gotestsum --format=testname ./..."
