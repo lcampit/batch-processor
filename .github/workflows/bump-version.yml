@@ -1,10 +1,12 @@
 name: Bump version
 on:
-  push:
-    branches:
-      - master
+ push:
+ pull_request:
+    branches: "main"
+    paths:
+      - "**.go"
 jobs:
-  build:
+  tag:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
