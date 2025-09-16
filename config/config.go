@@ -1,15 +1,18 @@
+// Package config contains everything related to the
+// batch processor configuration, including BatchSize, TickerTimeour
+// and the input or output channels
 package config
 
 import "sync"
 
-// BatchProcessorConfig contains definitions about processor channels, batch size and ticker duration
+// BatchProcessorConfig is used to create a BatchProcessor with the given characteristics
 type BatchProcessorConfig[InputType any, OutputType any, ErrorType any] struct {
-	// TODO: add docs for each parameter
-	BatchSize            int
-	TickerTimeoutSeconds int
-	InputChannel         chan InputType
-	OutputChannel        chan OutputType
-	ErrorChannel         chan ErrorType
+	BatchSize            int // batch size before sending the batch to process
+	TickerTimeoutSeconds int // ticker duration before sending the batch to process, in seconds
 
-	WaitGroup *sync.WaitGroup
+	InputChannel  chan InputType
+	OutputChannel chan OutputType
+	ErrorChannel  chan ErrorType
+
+	WaitGroup *sync.WaitGroup // optional, used for synchronization if needed
 }
